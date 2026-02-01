@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordra - Order Flow Analysis for Sierra Chart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <img src="ordra-logo-purple.png" alt="Ordra" height="32">
+            </a>
+            <div class="nav-links">
+                <a href="#studies">Studies</a>
+                <a href="#installation">Installation</a>
+                <a href="https://github.com/OrdraLabs/Ordra" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <img src="ordra-logo-purple.png" alt="Ordra" class="hero-logo">
+            <p class="tagline">Order flow analysis studies for Sierra Chart</p>
+            <p class="description">A collection of custom ACSIL studies focused on order flow analysis, market microstructure, and volume profiling. Built for traders who want deeper insight into market dynamics.</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="studies" class="studies-section">
+            <h2>Studies</h2>
+            
+            <div class="category">
+                <h3>📊 Volume & Profile Analysis</h3>
+                <div class="study-grid">
+                    <div class="study-card">
+                        <h4>Leg To Leg Profiles</h4>
+                        <p>Dynamic volume profile that automatically resets on each market structure leg change. Uses fractal-based swing detection to identify legs.</p>
+                        <a href="docs/leg-to-leg-profiles.html" class="doc-link">Documentation →</a>
+                    </div>
+                    <div class="study-card">
+                        <h4>Balance Area AutoPlot</h4>
+                        <p>Automatic detection and visualization of multi-day balance zones based on overlapping Value Areas.</p>
+                        <a href="docs/balance-area.html" class="doc-link">Documentation →</a>
+                    </div>
+                    <div class="study-card">
+                        <h4>Weekly LVN Highlighter</h4>
+                        <p>Highlights low volume nodes from weekly profiles, identifying potential support/resistance zones.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Single Prints Zones</h4>
+                        <p>Identifies and marks single print areas — regions where price moved quickly with minimal trading activity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>📈 Order Flow & Delta</h3>
+                <div class="study-grid">
+                    <div class="study-card">
+                        <h4>Delta Imbalance Signals</h4>
+                        <p>Detects significant delta imbalances at price levels, highlighting aggressive buying or selling.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Delta Divergence</h4>
+                        <p>Identifies divergences between price movement and cumulative delta, spotting potential reversals.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Cumulative Delta Pressure</h4>
+                        <p>Measures buying/selling pressure via cumulative delta analysis across configurable periods.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Aggression Exhaustion</h4>
+                        <p>Detects exhaustion patterns in aggressive buying/selling activity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>📉 Market Depth & Liquidity</h3>
+                <div class="study-grid">
+                    <div class="study-card">
+                        <h4>Depth Pressure Monitor</h4>
+                        <p>Real-time monitoring of bid/ask depth pressure and order book imbalances.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Adverse Selection</h4>
+                        <p>Depth-based adverse selection detection — identifies when liquidity providers are being picked off.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Liquidity Pull Detector</h4>
+                        <p>Detects when liquidity is being pulled from the book, signaling potential directional moves.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>MM Liquidity Detector</h4>
+                        <p>Identifies market maker liquidity patterns and positioning in the order book.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Iceberg Order Detector</h4>
+                        <p>Detects potential iceberg orders by analyzing fill patterns and replenishment behavior.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Rebid Reoffer Detector</h4>
+                        <p>Tracks rebidding and reoffering activity, showing where participants are defending levels.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>🔧 Utilities</h3>
+                <div class="study-grid">
+                    <div class="study-card">
+                        <h4>Volume Speed</h4>
+                        <p>Measures the rate of volume flow, helping identify acceleration or deceleration in activity.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Up/Down Volume Threshold Signals</h4>
+                        <p>Alerts when up or down volume breaches configurable thresholds.</p>
+                    </div>
+                    <div class="study-card">
+                        <h4>Sync VBP Reset</h4>
+                        <p>Synchronizes Volume by Price study resets across multiple charts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="installation-section">
+            <h2>Installation</h2>
+            <div class="install-steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <h4>Copy Source Files</h4>
+                        <p>Copy the <code>.cpp</code> files to Sierra Chart's source folder:</p>
+                        <pre><code>C:\SierraChart\ACS_Source\</code></pre>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <h4>Build Studies</h4>
+                        <p>In Sierra Chart, go to <strong>Analysis → Build Custom Studies DLL</strong></p>
+                        <p>Select the files and click <strong>Build</strong></p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <h4>Add to Chart</h4>
+                        <p>Add studies via <strong>Analysis → Studies</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="requirements">
+                <h3>Requirements</h3>
+                <ul>
+                    <li>Sierra Chart with ACSIL support</li>
+                    <li>Denali data feed recommended for depth studies</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 OrdraLabs. Private use only.</p>
+            <div class="footer-links">
+                <a href="https://github.com/OrdraLabs" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

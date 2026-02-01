@@ -1,0 +1,224 @@
+/* Documentation Page Styles */
+
+.doc-page {
+    padding-top: 6rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.doc-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+}
+
+.doc-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.doc-tagline {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.doc-content section {
+    margin-bottom: 3rem;
+}
+
+.doc-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+}
+
+.doc-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.doc-content ul,
+.doc-content ol {
+    color: var(--text-secondary);
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.doc-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.doc-content strong {
+    color: var(--text-primary);
+}
+
+.doc-content code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--bg-secondary);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    color: var(--accent);
+}
+
+.doc-content pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.doc-content pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Feature List */
+.feature-list {
+    list-style: none;
+    margin-left: 0;
+    counter-reset: feature;
+}
+
+.feature-list li {
+    margin-bottom: 1.5rem;
+    padding-left: 3rem;
+    position: relative;
+}
+
+.feature-list li::before {
+    counter-increment: feature;
+    content: counter(feature);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.feature-list li strong {
+    display: block;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-list li p {
+    margin-bottom: 0;
+}
+
+/* Tables */
+.params-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.params-table th,
+.params-table td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.params-table th {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.params-table td {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.params-table td:first-child {
+    white-space: nowrap;
+}
+
+.params-table code {
+    font-size: 0.8rem;
+}
+
+/* Note */
+.note {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: -0.5rem;
+}
+
+/* Troubleshoot */
+.troubleshoot {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.troubleshoot h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.troubleshoot ul {
+    margin-bottom: 0;
+    margin-left: 1.25rem;
+}
+
+.troubleshoot li {
+    margin-bottom: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .doc-page {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .doc-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .params-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .feature-list li {
+        padding-left: 2.5rem;
+    }
+}

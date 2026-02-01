@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leg To Leg Profiles - Ordra</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="docs.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">
+                <img src="../ordra-logo-purple.png" alt="Ordra" height="32">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#studies">Studies</a>
+                <a href="../index.html#installation">Installation</a>
+                <a href="https://github.com/OrdraLabs/Ordra" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="doc-page">
+        <div class="doc-header">
+            <a href="../index.html" class="back-link">← Back to Studies</a>
+            <h1>Leg To Leg Profiles</h1>
+            <p class="doc-tagline">Dynamic volume profile that automatically resets on each market structure leg change.</p>
+        </div>
+
+        <div class="doc-content">
+            <section>
+                <h2>Overview</h2>
+                <p>This study detects swing highs and lows using fractal-based swing detection, then controls a native Sierra Chart Volume by Price study to display the volume profile for the current leg only. When price makes a new swing (direction change), the profile resets to start from that swing point.</p>
+            </section>
+
+            <section>
+                <h2>How It Works</h2>
+                <ol class="feature-list">
+                    <li>
+                        <strong>Swing Detection</strong>
+                        <p>Uses fractal logic to identify swing highs and lows. A swing high requires N bars on each side with lower highs. A swing low requires N bars on each side with higher lows. N is configurable via "Swing Strength".</p>
+                    </li>
+                    <li>
+                        <strong>Leg Change Detection</strong>
+                        <p>When swing direction changes (high to low or low to high), a new leg begins.</p>
+                    </li>
+                    <li>
+                        <strong>VBP Control</strong>
+                        <p>The study programmatically updates a Volume by Price study's start/end datetime to show only the current leg's profile.</p>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Setup</h2>
+                <ol>
+                    <li>Add a <strong>Volume by Price</strong> study to your chart first</li>
+                    <li>Add <strong>Leg To Leg Profiles</strong> study</li>
+                    <li>In the study settings, set "Volume by Price Study" to reference your VBP study</li>
+                    <li>Configure the VBP study's visual settings (colors, width, etc.) as desired</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Inputs</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Input</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Swing Strength (bars)</code></td>
+                            <td>5</td>
+                            <td>Number of bars on each side required to confirm a swing. Higher = fewer swings, longer legs. Lower = more swings, shorter legs.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Ticks Per Bar</code></td>
+                            <td>4</td>
+                            <td>Tick aggregation for the volume profile. Passed to the VBP study.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Volume by Price Study</code></td>
+                            <td>-</td>
+                            <td>Reference to the VBP study to control. <strong>Required.</strong></td>
+                        </tr>
+                        <tr>
+                            <td><code>Debug Mode</code></td>
+                            <td>No</td>
+                            <td>Enable to log swing detection and VBP updates to the message log.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Swing Strength Guidelines</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Timeframe</th>
+                            <th>Suggested Swing Strength</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ES/NQ</td>
+                            <td>1-5 min</td>
+                            <td>3-5</td>
+                        </tr>
+                        <tr>
+                            <td>ES/NQ</td>
+                            <td>15-30 min</td>
+                            <td>5-8</td>
+                        </tr>
+                        <tr>
+                            <td>ES/NQ</td>
+                            <td>60 min+</td>
+                            <td>8-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="note">Lower values = more sensitive, more frequent resets<br>Higher values = less sensitive, longer profile accumulation</p>
+            </section>
+
+            <section>
+                <h2>Example</h2>
+                <pre><code>Swing Strength: 5
+Ticks Per Bar: 4
+
+Market makes swing low at 10:00 AM
+  → Profile starts building from 10:00 AM
+
+Market makes swing high at 11:30 AM (direction change)
+  → Profile resets, now starts from 11:30 AM
+
+Market continues down, making lower lows
+  → Profile continues accumulating from 11:30 AM anchor</code></pre>
+            </section>
+
+            <section>
+                <h2>Technical Notes</h2>
+                <ul>
+                    <li>The study uses <code>sc.RecalculateChart()</code> to trigger VBP updates</li>
+                    <li>To avoid infinite loops, updates are skipped during <code>IsFullRecalculation</code></li>
+                    <li>State is preserved across recalculations using persistent variables</li>
+                    <li>Requires <code>sc.UpdateAlways = 1</code> to detect real-time swing changes</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Troubleshooting</h2>
+                <div class="troubleshoot">
+                    <h4>VBP not updating:</h4>
+                    <ul>
+                        <li>Ensure you've selected a valid Volume by Price study in the input</li>
+                        <li>Check the message log with Debug Mode enabled</li>
+                    </ul>
+                </div>
+                <div class="troubleshoot">
+                    <h4>Profile resetting too often:</h4>
+                    <ul>
+                        <li>Increase Swing Strength value</li>
+                    </ul>
+                </div>
+                <div class="troubleshoot">
+                    <h4>Profile not resetting on obvious swings:</h4>
+                    <ul>
+                        <li>Decrease Swing Strength value</li>
+                        <li>Ensure enough bars have formed after the swing (need N bars on right side)</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 OrdraLabs. Private use only.</p>
+            <div class="footer-links">
+                <a href="https://github.com/OrdraLabs" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

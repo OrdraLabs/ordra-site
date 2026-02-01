@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Area AutoPlot - Ordra</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="docs.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">
+                <img src="../ordra-logo-purple.png" alt="Ordra" height="32">
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#studies">Studies</a>
+                <a href="../index.html#installation">Installation</a>
+                <a href="https://github.com/OrdraLabs/Ordra" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="doc-page">
+        <div class="doc-header">
+            <a href="../index.html" class="back-link">← Back to Studies</a>
+            <h1>Balance Area AutoPlot</h1>
+            <p class="doc-tagline">Automatic detection and visualization of multi-day balance zones based on overlapping Value Areas.</p>
+        </div>
+
+        <div class="doc-content">
+            <section>
+                <h2>Overview</h2>
+                <p>This study identifies when the market is in "balance" — a condition where multiple days' Value Areas overlap significantly, indicating range-bound price action. It draws a highlighted zone showing the balance area boundaries.</p>
+            </section>
+
+            <section>
+                <h2>How It Works</h2>
+                <ol class="feature-list">
+                    <li>
+                        <strong>Session Detection</strong>
+                        <p>Identifies trading day boundaries in the chart data.</p>
+                    </li>
+                    <li>
+                        <strong>Value Area Calculation</strong>
+                        <p>For each session, calculates VAH (Value Area High), VAL (Value Area Low), and POC (Point of Control).</p>
+                    </li>
+                    <li>
+                        <strong>Balance Detection</strong>
+                        <p>Checks if the last 3 days' Value Areas overlap by the minimum percentage. If overlap meets the threshold, balance is detected.</p>
+                    </li>
+                    <li>
+                        <strong>Historical Fallback</strong>
+                        <p>If no current balance exists, finds and displays the most recent historical balance zone.</p>
+                    </li>
+                    <li>
+                        <strong>Zone Drawing</strong>
+                        <p>Draws a rectangle from balance start to current time with configurable extension.</p>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Inputs</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Input</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Min VA Overlap Percent</code></td>
+                            <td>20.0</td>
+                            <td>Minimum percentage overlap between Value Areas to qualify as balance. Lower = more sensitive.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Extend Right (Minutes)</code></td>
+                            <td>240</td>
+                            <td>How far to extend the zone past the current bar (useful for seeing the zone ahead of price).</td>
+                        </tr>
+                        <tr>
+                            <td><code>Zone Color</code></td>
+                            <td>RGB(66,75,113)</td>
+                            <td>Fill color for current balance zone.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Zone Opacity (0-100)</code></td>
+                            <td>90</td>
+                            <td>Transparency level. 0 = opaque, 100 = fully transparent.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Debug Messages</code></td>
+                            <td>No</td>
+                            <td>Log Value Area calculations to message log.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Destination Chart Number</code></td>
+                            <td>0</td>
+                            <td>Draw on another chart (e.g., TPO chart). 0 = disabled.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Also Draw On Current Chart</code></td>
+                            <td>Yes</td>
+                            <td>Draw on the chart where the study is applied.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Text Color</code></td>
+                            <td>RGB(128,128,128)</td>
+                            <td>Color for price labels and status text.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Text Size</code></td>
+                            <td>12</td>
+                            <td>Font size for labels.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Historical Balance Color</code></td>
+                            <td>RGB(63,67,82)</td>
+                            <td>Fill color when showing a historical (not current) balance zone.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Labels</h2>
+                <p>The study displays:</p>
+                <ul>
+                    <li><strong>Price labels:</strong> VAH and VAL prices at the right edge of the zone</li>
+                    <li><strong>Status label:</strong> "Balance" for current active balance, or "PBA MM/DD" (Prior Balance Area) for historical balance</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Balance vs Prior Balance Area (PBA)</h2>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Condition</th>
+                            <th>Color</th>
+                            <th>Label</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Balance</strong></td>
+                            <td>Last 3 days have overlapping VAs</td>
+                            <td>Zone Color</td>
+                            <td>"Balance"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PBA</strong></td>
+                            <td>No current balance; showing most recent historical</td>
+                            <td>Historical Balance Color</td>
+                            <td>"PBA MM/DD"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Cross-Chart Drawing</h2>
+                <p>To display the balance zone on a TPO or Numbers Bar chart:</p>
+                <ol>
+                    <li>Set "Destination Chart Number" to the target chart's number</li>
+                    <li>On the target chart, go to <strong>Chart → Chart Settings → Chart Drawings</strong></li>
+                    <li>Set "Copy Chart Drawings From Chart #" to the source chart number</li>
+                    <li>The zone will appear on both charts</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Example</h2>
+                <pre><code>Day 1: VAL=5050, VAH=5080 (range: 30 pts)
+Day 2: VAL=5055, VAH=5085 (range: 30 pts)
+Day 3: VAL=5045, VAH=5075 (range: 30 pts)
+
+Overlap between Day 1 & Day 3:
+  - Common range: 5050-5075 = 25 pts
+  - Overlap %: 25/30 = 83%
+  - Day 2 overlaps envelope: Yes
+
+Result: Balance detected
+Zone: 5045 (lowest VAL) to 5085 (highest VAH)</code></pre>
+            </section>
+
+            <section>
+                <h2>Trading Applications</h2>
+                <ul>
+                    <li><strong>Breakout Trading:</strong> Watch for price to break and hold outside the balance zone</li>
+                    <li><strong>Mean Reversion:</strong> Fade moves to balance zone edges when in balance</li>
+                    <li><strong>Context:</strong> Know whether market is in balance or trending mode</li>
+                    <li><strong>Support/Resistance:</strong> Balance zone edges often act as S/R levels</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Performance</h2>
+                <ul>
+                    <li>Calculations are cached per trading session</li>
+                    <li>Only recalculates on new trading day or full study recalculation</li>
+                    <li>Drawing updates every tick but uses cached values</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Troubleshooting</h2>
+                <div class="troubleshoot">
+                    <h4>No zone appearing:</h4>
+                    <ul>
+                        <li>Need at least 3 days of data</li>
+                        <li>Value Areas may not overlap enough — try lowering Min VA Overlap Percent</li>
+                        <li>Check Debug Messages for VA calculations</li>
+                    </ul>
+                </div>
+                <div class="troubleshoot">
+                    <h4>Zone too small/large:</h4>
+                    <ul>
+                        <li>Adjust Min VA Overlap Percent</li>
+                        <li>Lower value = tighter overlap required = smaller zones</li>
+                        <li>Higher value = looser requirement = larger zones</li>
+                    </ul>
+                </div>
+                <div class="troubleshoot">
+                    <h4>Zone not visible on TPO chart:</h4>
+                    <ul>
+                        <li>Verify Destination Chart Number is correct</li>
+                        <li>Check "Copy Chart Drawings From Chart #" setting on target chart</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 OrdraLabs. Private use only.</p>
+            <div class="footer-links">
+                <a href="https://github.com/OrdraLabs" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
