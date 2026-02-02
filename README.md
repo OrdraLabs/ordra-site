@@ -40,8 +40,8 @@ Pure HTML/CSS — no frameworks, no build step. Just clean, fast static files.
 git clone git@github.com:OrdraLabs/ordra-site.git
 cd ordra-site
 
-# Serve locally (Python)
-python3 -m http.server 8000
+# Serve locally (Ruby)
+ruby -run -e httpd . -p 8000
 
 # Open http://localhost:8000
 ```
